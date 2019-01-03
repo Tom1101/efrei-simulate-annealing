@@ -49,7 +49,7 @@ public class Main {
                 rand_place_bras = rand.nextInt(placeNumber);
                 randomPlaces randomPlaces = new randomPlaces(rand_place_bras,tools, placeNumbers, operationNumber, durations, unit_time);
                 System.out.println("Random Place: "+rand_place_bras);
-                randomPlaces.solution(3, i);
+                randomPlaces.solution(2, i);
             }
             /* E = ( C old - C New ) / T )
             T temperature de 0% -> 100% ( ti le nhay random tu 0 den 1 )
