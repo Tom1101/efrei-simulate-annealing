@@ -43,7 +43,7 @@ class randomPlaces {
     }
 
     // Calculation Total Cost of Left Neighboring Place
-    private void voisinsGauche(int times, int T) {
+    private void voisinsGauche(int times, double T) {
         for (int i = 1; i <= times; i++) {
             setRand_place_bras(this.place_before_jump);
             setCout_res(0);
@@ -54,7 +54,7 @@ class randomPlaces {
     }
 
     // Calculation Total Cost of Right Neighboring Place
-    private void voisinsDroite(int times, int T) {
+    private void voisinsDroite(int times, double T) {
         for (int i = 1; i <= times; i++) {
             setRand_place_bras(this.place_before_jump);
             setCout_res(0);
@@ -73,12 +73,11 @@ class randomPlaces {
      * @param T
      * @return double
      */
-    private double calculProbability(int cold, int cnew, int T) {
+    private double calculProbability(int cold, int cnew, double T) {
         double ap;
-        double e = 2.71828;
-        ap = Math.pow(e, (double) (cnew - cold) / T);
+        ap = Math.exp((double)(cnew - cold) / T);
         if (Math.round(ap * 100) / 100.00 > 1.00) ap = 1.00;
-        else ap = Math.round(ap * 100) / 100.00;
+        else ap = Math.round(ap * 100) / 100.000;
         return ap;
     }
 
@@ -90,7 +89,7 @@ class randomPlaces {
     }
 
     // Solution
-    void solution(int n, int T) {
+    void solution(int n, double T) {
         System.out.println("Temperature: " + T);
         this.firstPlaces();
         this.voisinsGauche(n, T);
