@@ -5,7 +5,6 @@ import java.util.Random;
 class randomPlaces {
     private int rand_place_bras;
     private int place_before_jump;
-    private int toolNumber;
     private List<String> tools;
     private List<Integer> placeNumbers;
     private int operationNumber;
@@ -16,9 +15,8 @@ class randomPlaces {
     private int Cnew;
 
     // Construction
-    randomPlaces(int rand_place_bras, int toolNumber, List<String> tools, List<Integer> placeNumbers, int operationNumber, List<String> durations, int unit_time) {
+    randomPlaces(int rand_place_bras, List<String> tools, List<Integer> placeNumbers, int operationNumber, List<String> durations, int unit_time) {
         this.rand_place_bras = rand_place_bras;
-        this.toolNumber = toolNumber;
         this.tools = tools;
         this.durations = durations;
         this.operationNumber = operationNumber;
@@ -30,8 +28,6 @@ class randomPlaces {
     // Calculation Total Cost
     private int calculationCout() {
         for (int i = 0; i < operationNumber; i++) {
-            //System.out.println("Place Random: " + rand_place_bras);
-            //System.out.println(i + 1 + " Tool Place: " + placeNumbers.get(Integer.parseInt(tools.get(i))));
             int cout;
             if (i == 0) {
                 int cal_cout = Math.abs(rand_place_bras - placeNumbers.get(Integer.parseInt(tools.get(i)))) * unit_time;
@@ -47,7 +43,11 @@ class randomPlaces {
         return cout_res;
     }
 
-    private int randomNeighboring(double T) {
+    /**
+     * Function for finding the random neighboring solution
+     * @return int
+     */
+    private int randomNeighboring() {
         setRand_place_bras(this.place_before_jump);
         setCout_res(0);
         int e1 = getRandomNumberInRange(1, 5);
@@ -57,8 +57,6 @@ class randomPlaces {
         }
         Collections.swap(placeNumbers, e1, e2);
         System.out.println("Switching the position of tool " +e1+" to the position of tool "+e2);
-        //double ap = calculProbability(this.firstPlace, this.Cnew, T);
-        //System.out.println("Total Cout neighboring place ("+e1+"<->"+e2+") : " + cout_res + ", Probability: " + ap+ ", Temperature: " + T);
         return calculationCout();
     }
 
@@ -84,43 +82,47 @@ class randomPlaces {
     // Show out the first random places
     private void firstPlaces() {
         calculationCout();
-        System.out.println("Total Cout first random place: " + cout_res);
+        System.out.println("Total Cost of first random place: " + cout_res);
         this.Cold = cout_res;
     }
 
     // Solution
     void solution(int n, double T) {
+        //Show out Temperature and First Random Place
         System.out.println("Temperature: " + T);
         this.firstPlaces();
         System.out.println();
+        // Loop for number of iteration -> n
         for (int i = 0; i < n; i++) {
-            this.Cnew = this.randomNeighboring(T);
+            this.Cnew = this.randomNeighboring();
+            // If Cnew < Cold -> Move to the new solution
             if (this.Cnew < this.Cold) {
                 this.Cold = this.Cnew;
                 double alpha = 0.9;
+                //Decreased T at Alpha
                 T *= alpha;
-                System.out.println("Total Cout neighboring place : " + this.Cnew + ", Temperature: " + Math.round(T * 100) / 100.00);
+                System.out.println("Total Cost of neighboring place : " + this.Cnew + ", Temperature: " + Math.round(T * 100) / 100.00);
                 System.out.println();
-            } else {
+            } else { // Else Cnew > Cold -> Maybe move to the new solution
+                // Calculation the acceptance probability
                 double ap = calculProbability(this.Cold, this.Cnew, T);
+                // Generate a random double number
                 double randomNumber = Math.random();
+                //If the acceptance probability > randomNumber -> Move to the new solution
                 if( ap > randomNumber) {
                     this.Cold = this.Cnew;
                     double alpha = 0.9;
                     T *= alpha;
-                    System.out.println("Total Cout neighboring place: " + this.Cnew + ", Probability: " + ap+ ", Temperature: " + Math.round(T * 100) / 100.00);
+                    System.out.println("Total Cost of neighboring place: " + this.Cnew + ", Probability: " + ap+ ", Temperature: " + Math.round(T * 100) / 100.00);
                     System.out.println();
-                } else {
+                } else { //Rest in this solution
                     double alpha = 0.9;
                     T *= alpha;
-                    System.out.println("Total Cout neighboring place: " + this.Cold + ", Probability: " + ap+ ", Temperature: " + Math.round(T * 100) / 100.00);
+                    System.out.println("Total Cost of neighboring place: " + this.Cold + ", Probability: " + ap+ ", Temperature: " + Math.round(T * 100) / 100.00);
                     System.out.println();
                 }
             }
         }
-
-        //this.voisinsGauche(n, T);
-        //this.voisinsDroite(n, T);
     }
 
     public int getCout_res() {

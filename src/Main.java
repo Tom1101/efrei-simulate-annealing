@@ -44,10 +44,12 @@ public class Main {
             }
             // i is temperature, n is number of random neighboring
             rand_place_bras = rand.nextInt(placeNumber);
+            // Show out the random solution
             System.out.println(autoPlaces);
-            randomPlaces randomPlaces = new randomPlaces(rand_place_bras, toolNumber, tools, placeNumbers, operationNumber, durations, unit_time);
+            // RandomPlaces Functions
+            randomPlaces randomPlaces = new randomPlaces(rand_place_bras, tools, placeNumbers, operationNumber, durations, unit_time);
             System.out.println("Random Place: " + rand_place_bras);
-            // n: Itération et T: Temperature
+            // Function Solution for finding the best solution with n is Iteration and T is Temperature
             randomPlaces.solution(10, 1);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
