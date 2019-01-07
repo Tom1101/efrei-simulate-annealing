@@ -42,18 +42,17 @@ public class Main {
             for (int i = 1; i <= toolNumber; i++) {
                 autoPlaces.set(placeNumbers.get(i), i);
             }
-            //show the autoPlaces list
-            System.out.println(autoPlaces);
             // i is temperature, n is number of random neighboring
-            for(int i = 5; i >= 0; i--){
-                rand_place_bras = rand.nextInt(placeNumber);
-                randomPlaces randomPlaces = new randomPlaces(rand_place_bras,tools, placeNumbers, operationNumber, durations, unit_time);
-                System.out.println("Random Place: "+rand_place_bras);
-                randomPlaces.solution(2, (i/10.0));
-            }
+            rand_place_bras = rand.nextInt(placeNumber);
+            System.out.println(autoPlaces);
+            randomPlaces randomPlaces = new randomPlaces(rand_place_bras, toolNumber, tools, placeNumbers, operationNumber, durations, unit_time);
+            System.out.println("Random Place: " + rand_place_bras);
+            randomPlaces.solution(10,1);
             /* E = ( C old - C New ) / T )
             T temperature de 0% -> 100% ( ti le nhay random tu 0 den 1 )
              */
+            //double a = Math.random();
+            //System.out.println(a);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
