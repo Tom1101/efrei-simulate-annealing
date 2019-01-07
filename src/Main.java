@@ -47,12 +47,8 @@ public class Main {
             System.out.println(autoPlaces);
             randomPlaces randomPlaces = new randomPlaces(rand_place_bras, toolNumber, tools, placeNumbers, operationNumber, durations, unit_time);
             System.out.println("Random Place: " + rand_place_bras);
-            randomPlaces.solution(10,1);
-            /* E = ( C old - C New ) / T )
-            T temperature de 0% -> 100% ( ti le nhay random tu 0 den 1 )
-             */
-            //double a = Math.random();
-            //System.out.println(a);
+            // n: Itération et T: Temperature
+            randomPlaces.solution(10, 1);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
